@@ -13,6 +13,20 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const CategoryList = () => {
   const categories = useAppSelector(selectCategories);
 
+  const slotProps = {
+    toolbar: {
+      showQuickFilter: true,
+      quickFilterProps: { debounceMs: 500 },
+    },
+  };
+  const initialStatePageSize = {
+    pagination: {
+      paginationModel: {
+        pageSize: 4,
+      },
+    },
+  };
+
   // use categories to create rows
 
   const rows: GridRowsProp = categories.map((category) => ({
@@ -28,30 +42,31 @@ const CategoryList = () => {
   const columns: GridColDef[] = [
     {
       field: "name",
-      headerName: "Name",
       flex: 1,
+      headerName: "Name",
+      renderCell: renderNameCell,
     },
     {
       field: "description",
-      headerName: "Description",
       flex: 1,
+      headerName: "Description",
     },
     {
       field: "isActive",
-      headerName: "Active",
       flex: 1,
-      type: "boolean",
+      headerName: "Active",
       renderCell: renderIsActiveCell,
+      type: "boolean",
     },
     {
       field: "createdAt",
-      headerName: "Created At",
       flex: 1,
+      headerName: "Created At",
     },
     {
       field: "id",
-      headerName: "Action",
       flex: 1,
+      headerName: "Action",
       renderCell: renderIsActionCell,
     },
   ];
@@ -59,12 +74,23 @@ const CategoryList = () => {
   function renderIsActionCell(row: GridRenderCellParams) {
     return (
       <IconButton
+        aria-label="Delete"
         color="secondary"
         onClick={() => alert(`Delete ${row.value}`)}
-        aria-label="Delete"
       >
         <DeleteIcon />
       </IconButton>
+    );
+  }
+
+  function renderNameCell(row: GridRenderCellParams) {
+    return (
+      <Link
+        href={`/categories/edit/${row.id}`}
+        style={{ textDecoration: "none" }}
+      >
+        <Typography color={"primary"}>{row.value}</Typography>
+      </Link>
     );
   }
 
@@ -80,41 +106,30 @@ const CategoryList = () => {
     <Box maxWidth={"lg"} sx={{ mt: 4, mb: 4 }}>
       <Box display={"flex"} justifyContent="flex-end">
         <Button
-          variant="contained"
           color="secondary"
           component={Link}
           href="/categories/create"
           style={{ marginBottom: "1rem" }}
+          variant="contained"
         >
           New Category
         </Button>
       </Box>
 
-      <div style={{ height: 300, width: "100%" }}>
+      <Box sx={{ height: 600, display: "flex" }}>
         <DataGrid
+          columns={columns}
           disableColumnFilter
           disableColumnSelector
           disableDensitySelector
           disableRowSelectionOnClick
-          slots={{ toolbar: GridToolbar }}
-          slotProps={{
-            toolbar: {
-              showQuickFilter: true,
-              quickFilterProps: { debounceMs: 500 },
-            },
-          }}
-          rows={rows}
-          columns={columns}
+          initialState={initialStatePageSize}
           pageSizeOptions={[1, 2, 4]}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 4,
-              },
-            },
-          }}
+          rows={rows}
+          slotProps={slotProps}
+          slots={{ toolbar: GridToolbar }}
         />
-      </div>
+      </Box>
     </Box>
   );
 };
