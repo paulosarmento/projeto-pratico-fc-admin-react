@@ -12,7 +12,7 @@ interface Category {
 }
 const category: Category = {
   id: "1",
-  name: "Category 1",
+  name: "Banana",
   description: "Category 1 description",
   is_active: true,
   deleted_at: null,
@@ -22,9 +22,9 @@ const category: Category = {
 
 export const initialState = [
   category,
-  { ...category, id: "2", name: "Category 2", is_active: false },
-  { ...category, id: "3", name: "Category 3" },
-  { ...category, id: "4", name: "Category 4" },
+  { ...category, id: "2", name: "Kiwi", is_active: false },
+  { ...category, id: "3", name: "Orange" },
+  { ...category, id: "4", name: "Apple" },
 ];
 
 const categoriesSlice = createSlice({

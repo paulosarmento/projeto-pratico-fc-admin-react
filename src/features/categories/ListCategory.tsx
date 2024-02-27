@@ -6,6 +6,7 @@ import {
   GridColDef,
   GridRenderCellParams,
   GridRowsProp,
+  GridToolbar,
 } from "@mui/x-data-grid";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -91,13 +92,24 @@ const CategoryList = () => {
 
       <div style={{ height: 300, width: "100%" }}>
         <DataGrid
+          disableColumnFilter
+          disableColumnSelector
+          disableDensitySelector
+          disableRowSelectionOnClick
+          slots={{ toolbar: GridToolbar }}
+          slotProps={{
+            toolbar: {
+              showQuickFilter: true,
+              quickFilterProps: { debounceMs: 500 },
+            },
+          }}
           rows={rows}
           columns={columns}
           pageSizeOptions={[1, 2, 4]}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 2,
+                pageSize: 4,
               },
             },
           }}
