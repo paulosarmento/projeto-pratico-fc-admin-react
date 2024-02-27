@@ -22,7 +22,7 @@ const category: Category = {
 
 export const initialState = [
   category,
-  { ...category, id: "2", name: "Category 2" },
+  { ...category, id: "2", name: "Category 2", is_active: false },
   { ...category, id: "3", name: "Category 3" },
   { ...category, id: "4", name: "Category 4" },
 ];
