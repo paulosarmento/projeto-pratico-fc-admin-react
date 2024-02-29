@@ -4,8 +4,8 @@ import categoriesReducer from "../features/categories/categorySlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterReducer,
     categories: categoriesReducer,
+    counter: counterReducer,
   },
 });
 

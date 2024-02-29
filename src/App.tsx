@@ -5,18 +5,29 @@ import { Layout } from "./components/Layout";
 import { appTheme } from "./config/theme";
 import { RouterProvider } from "react-router-dom";
 import { Router } from "./components/Router";
+import { SnackbarProvider } from "notistack";
+
 function App() {
   return (
     <ThemeProvider theme={appTheme}>
-      <Box
-        component="main"
-        sx={{ height: "100vh", background: (theme) => theme.palette.grey[900] }}
+      <SnackbarProvider
+        autoHideDuration={2000}
+        maxSnack={3}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        <Header />
-        <Layout>
-          <RouterProvider router={Router}></RouterProvider>
-        </Layout>
-      </Box>
+        <Box
+          component="main"
+          sx={{
+            height: "100vh",
+            background: (theme) => theme.palette.grey[900],
+          }}
+        >
+          <Header />
+          <Layout>
+            <RouterProvider router={Router}></RouterProvider>
+          </Layout>
+        </Box>
+      </SnackbarProvider>
     </ThemeProvider>
   );
 }
