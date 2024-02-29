@@ -20,7 +20,7 @@
 // }
 
 export interface Results {
-  mata: Meta;
+  meta: Meta;
   links: Links;
   data: Category[];
 }

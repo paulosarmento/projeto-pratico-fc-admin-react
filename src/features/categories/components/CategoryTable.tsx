@@ -7,6 +7,7 @@ import {
   GridFilterModel,
   GridRenderCellParams,
   GridRowsProp,
+  GridToolbar,
 } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { deleteCategory } from "../categorySlice";
@@ -15,7 +16,7 @@ type Props = {
   data: Results | undefined;
   perPage: number;
   isFetching: boolean;
-  rowsPerPage: number;
+  rowsPerPage?: number[];
 
   handleOnPageChange: (page: number) => void;
   handleFilterChange: (filterModel: GridFilterModel) => void;
@@ -42,7 +43,7 @@ export function CategoriesTable({
   const initialStatePageSize = {
     pagination: {
       paginationModel: {
-        pageSize: 4,
+        pageSize: perPage,
       },
     },
   };
@@ -120,24 +121,26 @@ export function CategoriesTable({
   }
 
   const rows = data ? mapDataToGridRows(data) : [];
-  // const rowCount = data?.meta.total ?? 0;
+  // const rowCount = data?.meta.total || 0;
 
   return (
     <Box sx={{ height: 600, display: "flex" }}>
       <DataGrid
+        columns={columns}
         disableColumnFilter
         disableColumnSelector
         disableDensitySelector
         disableRowSelectionOnClick
-        rows={rows}
-        columns={columns}
-        slotProps={slotProps}
         initialState={initialStatePageSize}
-        pageSizeOptions={[1, 2, 4]}
-        filterMode="server"
-        paginationMode="server"
+        pageSizeOptions={rowsPerPage}
+        rows={rows}
+        slotProps={slotProps}
+        slots={{ toolbar: GridToolbar }}
+        // filterMode="server"
+        // paginationMode="server"
         loading={isFetching}
-        // rowCount={data ? data.length : 0}
+        onFilterModelChange={handleFilterChange}
+        // rowCount={rowCount}
       ></DataGrid>
     </Box>
   );
