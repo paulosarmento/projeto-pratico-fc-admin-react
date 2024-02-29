@@ -1,6 +1,6 @@
 import { Box, Button, IconButton, Link, Typography } from "@mui/material";
-import { useAppSelector } from "../../app/hooks";
-import { selectCategories } from "./categorySlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { deleteCategory, selectCategories } from "./categorySlice";
 import {
   DataGrid,
   GridColDef,
@@ -12,6 +12,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const CategoryList = () => {
   const categories = useAppSelector(selectCategories);
+  const dispatch = useAppDispatch();
 
   const slotProps = {
     toolbar: {
@@ -71,12 +72,16 @@ const CategoryList = () => {
     },
   ];
 
+  function handleDeleteCategory(id: string) {
+    dispatch(deleteCategory(id));
+  }
+
   function renderIsActionCell(row: GridRenderCellParams) {
     return (
       <IconButton
         aria-label="Delete"
         color="secondary"
-        onClick={() => alert(`Delete ${row.value}`)}
+        onClick={() => handleDeleteCategory(row.value)}
       >
         <DeleteIcon />
       </IconButton>

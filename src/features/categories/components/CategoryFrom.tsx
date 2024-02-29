@@ -8,14 +8,13 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import { useState } from "react";
 import { Category } from "../categorySlice";
 
 type Props = {
   category: Category;
   isDisabled?: boolean;
   isLoading?: boolean;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -24,13 +23,13 @@ export default function CategoryFrom({
   category,
   isDisabled = false,
   isLoading = false,
-  onSubmit,
+  handleSubmit,
   handleChange,
   handleToggle,
 }: Props) {
   return (
     <Box p={2}>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <FormControl fullWidth>
@@ -40,7 +39,7 @@ export default function CategoryFrom({
                 label="Name"
                 value={category.name}
                 disabled={isDisabled}
-                onChange={() => {}}
+                onChange={handleChange}
                 fullWidth
               />
             </FormControl>
@@ -53,7 +52,7 @@ export default function CategoryFrom({
                 label="Description"
                 value={category.description}
                 disabled={isDisabled}
-                onChange={() => {}}
+                onChange={handleChange}
                 fullWidth
               />
             </FormControl>
