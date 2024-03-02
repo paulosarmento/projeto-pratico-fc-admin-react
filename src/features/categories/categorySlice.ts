@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { apiSlice } from "../api/apiSlice";
-import { CategoryParams, Results } from "../../types/Category";
+import { CategoryParams, Results, Result } from "../../types/Category";
 
 export interface Category {
   id: string;
@@ -50,14 +50,45 @@ function deleteCategoryMutation(category: Category) {
   };
 }
 
+function createCategoryMutation(category: Category) {
+  return {
+    url: endpointUrl,
+    method: "POST",
+    body: category,
+  };
+}
+
+function updateCategoryMutation(category: Category) {
+  return {
+    url: `${endpointUrl}/${category.id}`,
+    method: "PATCH",
+    body: category,
+  };
+}
+function getCategory({ id }: { id: string }) {
+  return `${endpointUrl}/${id}`;
+}
+
 export const categoriesApiSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
     getCategories: query<Results, CategoryParams>({
       query: getCategories,
       providesTags: ["Categories"],
     }),
-    deleteCategory: mutation<Results, { id: string }>({
+    getCategory: query<Result, { id: string }>({
+      query: getCategory,
+      providesTags: ["Categories"],
+    }),
+    deleteCategory: mutation<Result, { id: string }>({
       query: deleteCategoryMutation,
+      invalidatesTags: ["Categories"],
+    }),
+    createCategory: mutation<Result, Category>({
+      query: createCategoryMutation,
+      invalidatesTags: ["Categories"],
+    }),
+    updateCategory: mutation<Result, Category>({
+      query: updateCategoryMutation,
       invalidatesTags: ["Categories"],
     }),
   }),
@@ -125,5 +156,10 @@ export const selectCategoryById = (state: RootState, id: string) => {
 export default categoriesSlice.reducer;
 export const { createCategory, updateCategory, deleteCategory } =
   categoriesSlice.actions;
-export const { useGetCategoriesQuery, useDeleteCategoryMutation } =
-  categoriesApiSlice;
+export const {
+  useGetCategoriesQuery,
+  useDeleteCategoryMutation,
+  useCreateCategoryMutation,
+  useUpdateCategoryMutation,
+  useGetCategoryQuery,
+} = categoriesApiSlice;

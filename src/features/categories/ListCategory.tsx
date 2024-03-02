@@ -1,4 +1,4 @@
-import { Box, Button, Link } from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
 import { GridFilterModel } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ import { CategoriesTable } from "./components/CategoryTable";
 
 const CategoryList = () => {
   const [page, setPage] = useState(1);
-  const [perPage] = useState(4);
+  const [perPage, setPerPage] = useState(4);
   const [search, setSearch] = useState("");
   const [rowsPerPage] = useState([4, 10, 15, 444]);
 
@@ -27,14 +27,18 @@ const CategoryList = () => {
   console.log(data);
 
   function handleOnPageChange(page: number) {
-    console.log(page);
+    setPage(page + 1);
   }
   function handleOnPageSizeChange(perPage: number) {
-    console.log(perPage);
+    setPerPage(perPage);
   }
 
   function handleFilterChange(filterMode: GridFilterModel) {
-    console.log("handleFilterChange");
+    if (filterMode.quickFilterValues?.length) {
+      const search = filterMode.quickFilterValues.join("");
+      setSearch(search);
+    }
+    return setSearch("");
   }
   async function handleDeleteCategory(id: string) {
     await deleteCategory({ id });
@@ -49,6 +53,10 @@ const CategoryList = () => {
       enqueueSnackbar("Error deleting category", { variant: "error" });
     }
   }, [deleteCategoryStatus, enqueueSnackbar]);
+
+  if (error) {
+    return <Typography>Error fetching categories</Typography>;
+  }
 
   return (
     <Box maxWidth={"lg"} sx={{ mt: 4, mb: 4 }}>
