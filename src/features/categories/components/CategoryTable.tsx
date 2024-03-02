@@ -1,4 +1,4 @@
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, TablePagination, Typography } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Results } from "../../../types/Category";
 import {
@@ -109,15 +109,24 @@ export function CategoriesTable({
       renderCell: renderIsActionCell,
     },
   ];
-  function mapDataToGridRows(data: Results | undefined) {
+  function mapDataToGridRows(data: Results) {
     return data && Array.isArray(data)
       ? data.map((category) => ({
           id: category.id,
           name: category.name,
+          description: category.description,
           isActive: category.is_active,
           createdAt: new Date(category.created_at).toLocaleDateString("pt-BR"),
         }))
       : [];
+
+    //   const { data: categories } = data;
+    //   return categories.map((category) => ({
+    //   id: category.id,
+    //   name: category.name,
+    //   isActive: category.is_active,
+    //   created_at: new Date(category.created_at).toLocaleDateString("pt-BR"),
+    // }));
   }
 
   const rows = data ? mapDataToGridRows(data) : [];
@@ -136,10 +145,13 @@ export function CategoriesTable({
         rows={rows}
         slotProps={slotProps}
         slots={{ toolbar: GridToolbar }}
-        // filterMode="server"
-        // paginationMode="server"
         loading={isFetching}
         onFilterModelChange={handleFilterChange}
+        // filterMode="server"
+        // paginationMode="server"
+        // onPageChange={handleOnPageChange}
+        // onPageSizeChange={handleOnPageSizeChange}
+        onPaginationModelChange={() => {}}
         // rowCount={rowCount}
       ></DataGrid>
     </Box>

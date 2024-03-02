@@ -1,28 +1,7 @@
-// export interface Results {
-//   type: Type;
-//   id: string;
-//   name: string;
-//   is_active: boolean;
-//   created_at: Date;
-//   updated_at: Date;
-// }
-// export enum Type {
-//   Categories = "categories",
-// }
-
-// export interface Result {
-//   type: Type;
-//   id: string;
-//   name: string;
-//   is_active: boolean;
-//   created_at: Date;
-//   updated_at: Date;
-// }
-
 export interface Results {
-  meta: Meta;
+  categories: Category[];
   links: Links;
-  data: Category[];
+  meta: Meta;
 }
 
 export interface Result {
@@ -34,21 +13,11 @@ export interface Result {
 export interface Category {
   id: string;
   name: string;
-  deleted_at: string;
+  description: string;
   is_active: boolean;
-  created_at: string;
-  updated_at: string;
-  description: string | null;
-}
-
-export interface Category {
-  id: string;
-  name: string;
-  deleted_at: string;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-  description: string | null;
+  deleted_at: null;
+  created_at: Date;
+  updated_at?: Date;
 }
 
 export interface Meta {
@@ -64,13 +33,13 @@ export interface Meta {
 export interface Links {
   first: string;
   last: string;
-  next: string;
   prev: null;
+  next: string;
 }
 
 export interface CategoryParams {
   page?: number;
-  per_page?: number;
+  perPage?: number;
   search?: string;
-  is_active?: boolean;
+  isActive?: boolean;
 }

@@ -9,12 +9,20 @@ import {
 import { CategoriesTable } from "./components/CategoryTable";
 
 const CategoryList = () => {
-  const { data, isFetching, error } = useGetCategoriesQuery();
-  const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
-  const { enqueueSnackbar } = useSnackbar();
-  const [rowsPerPage] = useState([4, 10, 15, 444]);
+  const [page, setPage] = useState(1);
   const [perPage] = useState(4);
   const [search, setSearch] = useState("");
+  const [rowsPerPage] = useState([4, 10, 15, 444]);
+
+  const options = {
+    perPage,
+    search,
+    page,
+  };
+
+  const { data, isFetching, error } = useGetCategoriesQuery(options);
+  const [deleteCategory, deleteCategoryStatus] = useDeleteCategoryMutation();
+  const { enqueueSnackbar } = useSnackbar();
 
   console.log(data);
 
