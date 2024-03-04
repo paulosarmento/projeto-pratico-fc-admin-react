@@ -1,6 +1,5 @@
 export interface Results {
-  categories: Category[];
-  links: Links;
+  data: Category[];
   meta: Meta;
 }
 

@@ -110,27 +110,17 @@ export function CategoriesTable({
     },
   ];
   function mapDataToGridRows(data: Results) {
-    return data && Array.isArray(data)
-      ? data.map((category) => ({
-          id: category.id,
-          name: category.name,
-          description: category.description,
-          isActive: category.is_active,
-          createdAt: new Date(category.created_at).toLocaleDateString("pt-BR"),
-        }))
-      : [];
-
-    //   const { data: categories } = data;
-    //   return categories.map((category) => ({
-    //   id: category.id,
-    //   name: category.name,
-    //   isActive: category.is_active,
-    //   created_at: new Date(category.created_at).toLocaleDateString("pt-BR"),
-    // }));
+    const { data: categories } = data;
+    return categories.map((category) => ({
+      id: category.id,
+      name: category.name,
+      isActive: category.is_active,
+      created_at: new Date(category.created_at).toLocaleDateString("pt-BR"),
+    }));
   }
 
   const rows = data ? mapDataToGridRows(data) : [];
-  // const rowCount = data?.meta.total || 0;
+  const rowCount = data?.meta.total || 0;
 
   return (
     <Box sx={{ height: 600, display: "flex" }}>
@@ -152,7 +142,7 @@ export function CategoriesTable({
         // onPageChange={handleOnPageChange}
         // onPageSizeChange={handleOnPageSizeChange}
         onPaginationModelChange={() => {}}
-        // rowCount={rowCount}
+        rowCount={rowCount}
       ></DataGrid>
     </Box>
   );

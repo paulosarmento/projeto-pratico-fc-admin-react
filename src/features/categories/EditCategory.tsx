@@ -3,6 +3,7 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+  Category,
   useGetCategoryQuery,
   useUpdateCategoryMutation,
 } from "./categorySlice";
@@ -18,9 +19,7 @@ const CategoryEdit = () => {
     name: "",
     description: "",
     is_active: false,
-    deleted_at: "",
     created_at: "",
-    updated_at: "",
   });
 
   const { enqueueSnackbar } = useSnackbar();
@@ -43,7 +42,7 @@ const CategoryEdit = () => {
 
   useEffect(() => {
     if (category) {
-      setCategoryState(category);
+      setCategoryState(category.data);
     }
   }, [category]);
 

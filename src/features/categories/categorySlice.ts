@@ -13,7 +13,7 @@ export interface Category {
   updated_at: string;
 }
 
-const endpointUrl = "/data";
+const endpointUrl = "/categories";
 
 function parseQueryParams(params: CategoryParams) {
   const query = new URLSearchParams();
