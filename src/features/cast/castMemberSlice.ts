@@ -1,7 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
+import {
+  CastMember,
+  CastMemberParams,
+  Result,
+  Results,
+} from "../../types/CastMembers";
 import { apiSlice } from "../api/apiSlice";
-import { CastMember, CastMemberParams, Results } from "../../types/CastMembers";
 
 const endpointUrl = "/cast-members";
 
@@ -39,13 +42,65 @@ function getCastMembers(params: CastMemberParams) {
   })}`;
 }
 
+function updateCastMembers(params: CastMember) {
+  return {
+    url: `${endpointUrl}/${params.id}`,
+    method: "PUT",
+    body: params,
+  };
+}
+
+function deleteCastMembers({ id }: { id: string }) {
+  return {
+    url: `${endpointUrl}/${id}`,
+    method: "DELETE",
+  };
+}
+
+function createCastMember(castMember: CastMember) {
+  return {
+    url: endpointUrl,
+    method: "POST",
+    body: castMember,
+  };
+}
+
+function getCastMember({ id }: { id: string }) {
+  return {
+    url: `${endpointUrl}/${id}`,
+    method: "GET",
+  };
+}
+
 export const castMembersApiSlice = apiSlice.injectEndpoints({
-  endpoints: ({ query }) => ({
+  endpoints: ({ query, mutation }) => ({
     getCastMembers: query<Results, CastMemberParams>({
       query: getCastMembers,
+      providesTags: ["CastMembers"],
+    }),
+    deleteCastMembers: mutation<Result, { id: string }>({
+      query: deleteCastMembers,
+      invalidatesTags: ["CastMembers"],
+    }),
+    createCastMember: mutation<Result, CastMember>({
+      query: createCastMember,
+      invalidatesTags: ["CastMembers"],
+    }),
+    updateCastMembers: mutation<Result, CastMember>({
+      query: updateCastMembers,
+      invalidatesTags: ["CastMembers"],
+    }),
+    getCastMember: query<Result, { id: string }>({
+      query: getCastMember,
       providesTags: ["CastMembers"],
     }),
   }),
 });
 
-export const { useGetCastMembersQuery } = castMembersApiSlice;
+export const {
+  useGetCastMembersQuery,
+  useDeleteCastMembersMutation,
+  useCreateCastMemberMutation,
+  useUpdateCastMembersMutation,
+  useGetCastMemberQuery,
+} = castMembersApiSlice;

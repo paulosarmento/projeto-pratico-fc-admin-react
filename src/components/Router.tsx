@@ -4,6 +4,7 @@ import { createBrowserRouter } from "react-router-dom";
 import CategoryList from "../features/categories/ListCategory";
 import CategoryCreate from "../features/categories/CreateCategory";
 import CategoryEdit from "../features/categories/EditCategory";
+import { CastMembersList } from "../features/cast/ListCastMembers";
 
 export const Router = createBrowserRouter([
   {
@@ -22,6 +23,11 @@ export const Router = createBrowserRouter([
     path: "/categories/edit/:id",
     element: <CategoryEdit />,
   },
+  {
+    path: "/cast-members",
+    element: <CastMembersList />,
+  },
+
   {
     path: "*",
     element: (

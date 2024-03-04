@@ -23,11 +23,7 @@ const CategoryList = () => {
   const [deleteCategory, { error: deleteError, isSuccess: deleteSuccess }] =
     useDeleteCategoryMutation();
 
-  const { data: castMembers } = useGetCastMembersQuery({
-    ...initialOptions,
-    type: 1,
-  });
-  console.log(castMembers);
+  // console.log(data);
 
   function handleOnPageChange(page: number) {
     setOptions({ ...options, page: page + 1 });

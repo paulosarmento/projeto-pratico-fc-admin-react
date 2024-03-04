@@ -2,6 +2,10 @@ export interface Results {
   data: CastMember[];
   meta: Meta;
 }
+export interface Result {
+  data: CastMember;
+  meta: Meta;
+}
 
 export interface CastMember {
   id: string;
