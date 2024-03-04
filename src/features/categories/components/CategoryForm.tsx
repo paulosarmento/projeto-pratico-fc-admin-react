@@ -8,7 +8,7 @@ import {
   Switch,
   TextField,
 } from "@mui/material";
-import { Category } from "../categorySlice";
+import { Category } from "../../../types/Category";
 
 type Props = {
   category: Category;
@@ -19,7 +19,7 @@ type Props = {
   handleToggle: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function CategoryFrom({
+export default function CategoryForm({
   category,
   isDisabled = false,
   isLoading = false,
@@ -44,6 +44,7 @@ export default function CategoryFrom({
               />
             </FormControl>
           </Grid>
+
           <Grid item xs={12}>
             <FormControl fullWidth>
               <TextField
@@ -57,7 +58,8 @@ export default function CategoryFrom({
               />
             </FormControl>
           </Grid>
-          <Grid>
+
+          <Grid item xs={12}>
             <FormGroup>
               <FormControlLabel
                 control={
@@ -73,6 +75,7 @@ export default function CategoryFrom({
               ></FormControlLabel>
             </FormGroup>
           </Grid>
+
           <Grid item xs={12}>
             <Box display="flex" gap={2}>
               <Button variant="contained" href="/categories">

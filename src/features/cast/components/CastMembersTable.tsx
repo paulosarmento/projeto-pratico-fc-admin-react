@@ -8,7 +8,7 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import { Results } from "../../../types/Category";
+import { Results } from "../../../types/CastMembers";
 
 type Props = {
   data: Results | undefined;
@@ -22,7 +22,7 @@ type Props = {
   handleDelete: (id: string) => void;
 };
 
-export function CategoriesTable({
+export function CastMembersTable({
   data,
   perPage,
   isFetching,
@@ -61,7 +61,7 @@ export function CategoriesTable({
   function renderNameCell(row: GridRenderCellParams) {
     return (
       <Link
-        to={`/categories/edit/${row.id}`}
+        to={`/cast-members/edit/${row.id}`}
         style={{ textDecoration: "none" }}
       >
         <Typography color={"primary"}>{row.value}</Typography>
@@ -69,54 +69,48 @@ export function CategoriesTable({
     );
   }
 
-  function renderIsActiveCell(row: GridRenderCellParams) {
+  function renderTypeCell(rowData: GridRenderCellParams) {
+    // console.log(rowData.value);
     return (
-      <Typography color={row.value ? "green" : "red"}>
-        {row.value ? "Active" : "Inactive"}
+      <Typography color="primary">
+        {rowData.value === 1 ? "Actor" : "Director"}
       </Typography>
     );
   }
   const columns: GridColDef[] = [
     {
-      field: "name",
       flex: 1,
+      field: "name",
       headerName: "Name",
       renderCell: renderNameCell,
     },
     {
-      field: "description",
       flex: 1,
-      headerName: "Description",
+      field: "type",
+      headerName: "Type",
+      renderCell: renderTypeCell,
     },
     {
-      field: "isActive",
       flex: 1,
-      headerName: "Active",
-      renderCell: renderIsActiveCell,
-      type: "boolean",
-    },
-    {
       field: "created_at",
-      flex: 1,
       headerName: "Created At",
     },
     {
-      field: "id",
       flex: 1,
+      field: "id",
       headerName: "Action",
       renderCell: renderIsActionCell,
     },
   ];
-  function mapDataToGridRows(data: Results) {
-    const { data: categories } = data;
 
-    return categories.map((category) => ({
-      id: category.id,
-      description: category.description,
-      name: category.name,
-      isActive: category.is_active,
-      created_at: category.created_at
-        ? new Date(category.created_at).toLocaleDateString("pt-br", {
+  function mapDataToGridRows(data: Results) {
+    const { data: castMembers } = data;
+    return castMembers.map((castMember) => ({
+      id: castMember.id,
+      name: castMember.name,
+      type: castMember.type,
+      created_at: castMember.created_at
+        ? new Date(castMember.created_at).toLocaleDateString("pt-br", {
             year: "numeric",
             month: "2-digit",
             day: "2-digit",

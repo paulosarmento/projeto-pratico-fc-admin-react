@@ -7,11 +7,10 @@ import {
   useGetCategoriesQuery,
 } from "./categorySlice";
 import { CategoriesTable } from "./components/CategoryTable";
-import { useGetCastMembersQuery } from "../cast/castMemberSlice";
 
 const initialOptions = {
   page: 1,
-  perPage: 4,
+  perPage: 10,
   search: "",
   rowsPerPage: [4, 10, 20, 30],
 };

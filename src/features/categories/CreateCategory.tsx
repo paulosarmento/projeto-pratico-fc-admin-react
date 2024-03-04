@@ -1,27 +1,25 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { Category, useCreateCategoryMutation } from "./categorySlice";
-import CategoryFrom from "./components/CategoryFrom";
+import { useCreateCategoryMutation } from "./categorySlice";
+import CategoryForm from "./components/CategoryForm";
+import { Category } from "../../types/Category";
 
+export const initialState: Category = {
+  name: "",
+  description: "",
+  is_active: false,
+};
 const CategoryCreate = () => {
   const { enqueueSnackbar } = useSnackbar();
   const [createCategory, status] = useCreateCategoryMutation();
   const [isDisabled, setIsDisabled] = useState(false);
-  const [categoryState, setCategoryState] = useState<Category>({
-    id: "",
-    name: "",
-    description: "",
-    is_active: false,
-    deleted_at: "",
-    created_at: "",
-    updated_at: "",
-  });
+  const [categoryState, setCategoryState] = useState<Category>(initialState);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await createCategory(categoryState);
-    enqueueSnackbar("Category Created", { variant: "success" });
+    const { id, created_at, ...initialState } = categoryState;
+    await createCategory(initialState);
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +51,7 @@ const CategoryCreate = () => {
             Category Create
           </Typography>
         </Box>
-        <CategoryFrom
+        <CategoryForm
           category={categoryState}
           handleChange={handleChange}
           handleSubmit={handleSubmit}

@@ -3,11 +3,10 @@ import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  Category,
   useGetCategoryQuery,
   useUpdateCategoryMutation,
 } from "./categorySlice";
-import CategoryFrom from "./components/CategoryFrom";
+import CategoryFrom from "./components/CategoryForm";
 
 const CategoryEdit = () => {
   const id = useParams().id || "";

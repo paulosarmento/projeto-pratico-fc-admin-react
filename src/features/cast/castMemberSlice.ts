@@ -8,13 +8,6 @@ import { apiSlice } from "../api/apiSlice";
 
 const endpointUrl = "/cast-members";
 
-export const initialState: CastMember = {
-  id: "",
-  name: "",
-  type: 0,
-  created_at: "",
-};
-
 function parseQueryParams(params: CastMemberParams) {
   const query = new URLSearchParams();
   if (params.page) {
@@ -45,7 +38,7 @@ function getCastMembers(params: CastMemberParams) {
 function updateCastMembers(params: CastMember) {
   return {
     url: `${endpointUrl}/${params.id}`,
-    method: "PUT",
+    method: "PATCH",
     body: params,
   };
 }

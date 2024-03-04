@@ -1,37 +1,40 @@
-import { Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import { GridFilterModel } from "@mui/x-data-grid";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
-import { useGetCategoriesQuery } from "../categories/categorySlice";
-import { useDeleteCastMembersMutation } from "./castMemberSlice";
+import { Link } from "react-router-dom";
+import {
+  useDeleteCastMembersMutation,
+  useGetCastMembersQuery,
+} from "./castMemberSlice";
+import { CastMembersTable } from "./components/CastMembersTable";
+const initialOptions = {
+  page: 1,
+  perPage: 10,
+  search: "",
+  rowsPerPage: [4, 10, 20, 30],
+};
 
 export const CastMembersList = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(4);
-  const [search, setSearch] = useState("");
-  const { data, isFetching, error } = useGetCategoriesQuery({
-    page,
-    perPage,
-    search,
-  });
-  const [rowsPerPage] = useState([4, 10, 20, 30]);
+  const [options, setOptions] = useState(initialOptions);
+  const { data, isFetching, error } = useGetCastMembersQuery(options);
   const [deleteCastMember, { error: deleteError, isSuccess: deleteSuccess }] =
     useDeleteCastMembersMutation();
 
   function handleOnPageChange(page: number) {
-    setPage(page + 1);
+    setOptions({ ...options, page: page + 1 });
   }
   function handleOnPageSizeChange(perPage: number) {
-    setPerPage(perPage);
+    setOptions({ ...options, perPage });
   }
 
   function handleFilterChange(filterMode: GridFilterModel) {
     if (filterMode.quickFilterValues?.length) {
       const search = filterMode.quickFilterValues.join("");
-      setSearch(search);
+      setOptions({ ...options, search });
     }
-    return setSearch("");
+    return setOptions({ ...options, search: "" });
   }
   async function handleDeleteCastMember(id: string) {
     await deleteCastMember({ id });
@@ -50,5 +53,29 @@ export const CastMembersList = () => {
     return <Typography>Error fetching Cast Member</Typography>;
   }
 
-  return <Typography>oi</Typography>;
+  return (
+    <Box maxWidth={"lg"} sx={{ mt: 4, mb: 4 }}>
+      <Box display={"flex"} justifyContent="flex-end">
+        <Button
+          color="secondary"
+          component={Link}
+          to="/cast-members/create"
+          style={{ marginBottom: "1rem" }}
+          variant="contained"
+        >
+          New Cast Members
+        </Button>
+      </Box>
+      <CastMembersTable
+        data={data}
+        isFetching={isFetching}
+        perPage={options.perPage}
+        rowsPerPage={options.rowsPerPage}
+        handleDelete={handleDeleteCastMember}
+        handleOnPageChange={handleOnPageChange}
+        handleOnPageSizeChange={handleOnPageSizeChange}
+        handleFilterChange={handleFilterChange}
+      />
+    </Box>
+  );
 };

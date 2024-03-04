@@ -8,10 +8,10 @@ export interface Result {
 }
 
 export interface CastMember {
-  id: string;
+  id?: string;
   name: string;
   type: number;
-  created_at: string;
+  created_at?: string;
 }
 
 export interface Meta {
