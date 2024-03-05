@@ -22,7 +22,7 @@ type Props = {
   handleDelete: (id: string) => void;
 };
 
-export function CategoriesTable({
+export function CategoryTable({
   data,
   perPage,
   isFetching,

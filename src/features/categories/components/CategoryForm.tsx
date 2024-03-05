@@ -85,9 +85,9 @@ export default function CategoryForm({
                 type="submit"
                 variant="contained"
                 color="secondary"
-                disabled={isDisabled}
+                disabled={isDisabled || isLoading}
               >
-                Save
+                {isLoading ? "Saving..." : "Save"}
               </Button>
             </Box>
           </Grid>

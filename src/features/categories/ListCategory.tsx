@@ -6,7 +6,7 @@ import {
   useDeleteCategoryMutation,
   useGetCategoriesQuery,
 } from "./categorySlice";
-import { CategoriesTable } from "./components/CategoryTable";
+import { CategoryTable } from "./components/CategoryTable";
 
 const initialOptions = {
   page: 1,
@@ -68,7 +68,7 @@ const CategoryList = () => {
           New Category
         </Button>
       </Box>
-      <CategoriesTable
+      <CategoryTable
         data={data}
         isFetching={isFetching}
         perPage={options.perPage}

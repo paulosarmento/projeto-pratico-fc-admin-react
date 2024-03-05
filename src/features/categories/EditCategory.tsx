@@ -6,7 +6,7 @@ import {
   useGetCategoryQuery,
   useUpdateCategoryMutation,
 } from "./categorySlice";
-import CategoryFrom from "./components/CategoryFrom";
+import CategoryFrom from "./components/CategoryForm";
 
 const CategoryEdit = () => {
   const id = useParams().id || "";
