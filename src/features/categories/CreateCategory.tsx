@@ -2,7 +2,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import { useEffect, useState } from "react";
 import { useCreateCategoryMutation } from "./categorySlice";
-import CategoryForm from "./components/CategoryForm";
+import CategoryForm from "./components/CategoryFrom";
 import { Category } from "../../types/Category";
 
 export const initialState: Category = {
