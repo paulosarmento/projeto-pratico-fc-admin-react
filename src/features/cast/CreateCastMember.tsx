@@ -3,7 +3,7 @@ import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { CastMember } from "../../types/CastMembers";
 import { useCreateCastMemberMutation } from "./castMemberSlice";
-import CastMemberForm from "./components/CastMembersFrom";
+import CastMemberForm from "./components/CastMembersForm";
 export const initialState: CastMember = {
   id: "",
   name: "",

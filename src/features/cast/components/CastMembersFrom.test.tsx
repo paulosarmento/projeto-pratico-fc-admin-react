@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import CastMemberForm from "./CastMembersFrom";
+import CastMemberForm from "./CastMembersForm";
 import { BrowserRouter } from "react-router-dom";
 
 const props = {

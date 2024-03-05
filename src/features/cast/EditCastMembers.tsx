@@ -7,7 +7,7 @@ import {
   useGetCastMemberQuery,
   useUpdateCastMembersMutation,
 } from "./castMemberSlice";
-import CastMemberForm from "./components/CastMembersFrom";
+import CastMemberForm from "./components/CastMembersForm";
 export const initialState: CastMember = {
   id: "",
   name: "",
