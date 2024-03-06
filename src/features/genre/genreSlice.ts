@@ -1,9 +1,10 @@
+import { Results } from "../../types/Category";
 import {
   Genre,
   GenreParams,
   GenrePayload,
   Result,
-  Results,
+  Genres,
 } from "../../types/Genres";
 import { apiSlice } from "../api/apiSlice";
 
@@ -52,6 +53,17 @@ function getCategories({
   const params = { search, page, perPage, isActive };
   return `${endpointUrl}?${parseQueryParams(params)}`;
 }
+function getGenres({ page = 1, perPage = 10, search = "" }) {
+  const params = { search, page, perPage };
+  return `${endpointUrl}?${parseQueryParams(params)}`;
+}
+
+function deleteGenreMutation({ id }: { id: string }) {
+  return {
+    url: `${endpointUrl}/${id}`,
+    method: "DELETE",
+  };
+}
 
 function getGenre({ id }: { id: string }) {
   return `${endpointUrl}/${id}`;
@@ -83,6 +95,14 @@ export const genreSlice = apiSlice.injectEndpoints({
       query: createGenreMutation,
       invalidatesTags: ["Genres"],
     }),
+    deleteGenre: mutation<Genre, { id: string }>({
+      query: deleteGenreMutation,
+      invalidatesTags: ["Genres"],
+    }),
+    getGenres: query<Genres, GenreParams>({
+      query: getGenres,
+      providesTags: ["Genres"],
+    }),
   }),
 });
 
@@ -91,4 +111,6 @@ export const {
   useGetCategoriesQuery,
   useGetGenreQuery,
   useUpdateGenreMutation,
+  useDeleteGenreMutation,
+  useGetGenresQuery,
 } = genreSlice;

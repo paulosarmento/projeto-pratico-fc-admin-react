@@ -8,7 +8,7 @@ import CategoryEdit from "../features/categories/EditCategory";
 import CategoryList from "../features/categories/ListCategory";
 import { GenreCreate } from "../features/genre/GenreCreate";
 import { GenreEdit } from "../features/genre/GenreEdit";
-import GenreList from "../features/genre/GenreList";
+import { GenreList } from "../features/genre/GenreList";
 
 export const Router = createBrowserRouter([
   {

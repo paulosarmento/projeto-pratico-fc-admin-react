@@ -10,10 +10,6 @@ export interface Result {
   meta: Meta;
 }
 
-export interface Results {
-  data: Genre[];
-  meta: Meta;
-}
 export interface Genre {
   id: string;
   name: string;
