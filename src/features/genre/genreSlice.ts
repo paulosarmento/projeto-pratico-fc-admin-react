@@ -1,4 +1,10 @@
-import { Genre, GenreParams, GenrePayload, Results } from "../../types/Genres";
+import {
+  Genre,
+  GenreParams,
+  GenrePayload,
+  Result,
+  Results,
+} from "../../types/Genres";
 import { apiSlice } from "../api/apiSlice";
 
 const endpointUrl = "/genres";
@@ -47,11 +53,31 @@ function getCategories({
   return `${endpointUrl}?${parseQueryParams(params)}`;
 }
 
+function getGenre({ id }: { id: string }) {
+  return `${endpointUrl}/${id}`;
+}
+
+function updateGenreMutation(genre: GenrePayload) {
+  return {
+    url: `${endpointUrl}/${genre.id}`,
+    method: "PATCH",
+    body: genre,
+  };
+}
+
 export const genreSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
     getCategories: query<Results, GenreParams>({
       query: getCategories,
       providesTags: ["Genres"],
+    }),
+    getGenre: query<Result, { id: string }>({
+      query: getGenre,
+      providesTags: ["Genres"],
+    }),
+    updateGenre: mutation<Genre, GenrePayload>({
+      query: updateGenreMutation,
+      invalidatesTags: ["Genres"],
     }),
     createGenre: mutation<Genre, GenrePayload>({
       query: createGenreMutation,
@@ -60,4 +86,9 @@ export const genreSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateGenreMutation, useGetCategoriesQuery } = genreSlice;
+export const {
+  useCreateGenreMutation,
+  useGetCategoriesQuery,
+  useGetGenreQuery,
+  useUpdateGenreMutation,
+} = genreSlice;
