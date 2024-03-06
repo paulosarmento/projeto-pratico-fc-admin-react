@@ -52,6 +52,7 @@ export function GenreForm({
               options={categories || []}
               value={genre.categories}
               getOptionLabel={(option) => option.name}
+              isOptionEqualToValue={(option, value) => option.id === value.id}
               disabled={isDisabled || !categories}
               renderOption={(props, option) => (
                 <li {...props} key={option.id}>
