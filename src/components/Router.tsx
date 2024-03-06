@@ -6,6 +6,7 @@ import { CastMembersList } from "../features/cast/ListCastMembers";
 import CategoryCreate from "../features/categories/CreateCategory";
 import CategoryEdit from "../features/categories/EditCategory";
 import CategoryList from "../features/categories/ListCategory";
+import { GenreCreate } from "../features/genre/GenreCreate";
 
 export const Router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ export const Router = createBrowserRouter([
   {
     path: "/cast-members/edit/:id",
     element: <CastMemberEdit />,
+  },
+  {
+    path: "/genres/create",
+    element: <GenreCreate />,
   },
 
   {
