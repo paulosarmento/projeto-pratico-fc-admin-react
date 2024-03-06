@@ -10,6 +10,10 @@ export interface Result {
   meta: Meta;
 }
 
+export interface Results {
+  data: Genre[];
+  meta: Meta;
+}
 export interface Genre {
   id: string;
   name: string;
@@ -34,7 +38,6 @@ export interface GenreParams {
 }
 
 export interface GenrePayload {
-  id: string;
   name: string;
-  categories_id: string[];
+  categories_id: (string | undefined)[];
 }

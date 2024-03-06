@@ -8,9 +8,10 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
+import { Genre } from "../../../types/Genres";
 
 type Props = {
-  genre: any;
+  genre: Genre;
   categories: any;
   isDisabled?: boolean;
   isLoading?: boolean;
@@ -48,9 +49,23 @@ export function GenreForm({
               disablePortal
               multiple
               loading={isLoading}
-              options={[]}
+              options={categories || []}
               value={genre.categories}
+              getOptionLabel={(option) => option.name}
               disabled={isDisabled || !categories}
+              renderOption={(props, option) => (
+                <li {...props} key={option.id}>
+                  {option.name}
+                </li>
+              )}
+              onChange={(_, value) => {
+                handleChange({
+                  target: {
+                    name: "categories",
+                    value,
+                  },
+                } as any);
+              }}
               renderInput={(params) => (
                 <TextField
                   {...params}

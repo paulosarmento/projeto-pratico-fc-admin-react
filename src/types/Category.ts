@@ -6,7 +6,6 @@ export interface Results {
 export interface Result {
   data: Category;
   meta: Meta;
-  links: Links;
 }
 
 export interface Category {
