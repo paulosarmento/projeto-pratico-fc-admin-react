@@ -9,6 +9,9 @@ import CategoryList from "../features/categories/ListCategory";
 import { GenreCreate } from "../features/genre/GenreCreate";
 import { GenreEdit } from "../features/genre/GenreEdit";
 import { GenreList } from "../features/genre/GenreList";
+import { VideoList } from "../features/video/VideoList";
+import { VideoCreate } from "../features/video/VideoCreate";
+import { VideoEdit } from "../features/video/VideoEdit";
 
 export const Router = createBrowserRouter([
   {
@@ -48,8 +51,20 @@ export const Router = createBrowserRouter([
     element: <GenreEdit />,
   },
   {
-    path: "/genres/",
+    path: "/genres",
     element: <GenreList />,
+  },
+  {
+    path: "/videos",
+    element: <VideoList />,
+  },
+  {
+    path: "/videos/create",
+    element: <VideoCreate />,
+  },
+  {
+    path: "/videos/edit/:id",
+    element: <VideoEdit />,
   },
 
   {

@@ -27,7 +27,7 @@ export interface Video {
   genres: Genre[];
   cast_members_id: string[];
   cast_members: CastMember[];
-  created_at: Date;
+  created_at: string;
 }
 
 export interface Meta {
