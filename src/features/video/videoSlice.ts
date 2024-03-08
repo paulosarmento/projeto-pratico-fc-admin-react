@@ -43,13 +43,24 @@ const getVideos = ({ page = 1, perPage = 10, search = "" }) => {
   return `${endpointUrl}?${parseQueryParams(params)}`;
 };
 
+const deleteVideoMutation = ({ id }: { id: string }) => {
+  return {
+    url: `${endpointUrl}/${id}`,
+    method: "DELETE",
+  };
+};
+
 const videosSlice = apiSlice.injectEndpoints({
-  endpoints: ({ query }) => ({
+  endpoints: ({ query, mutation }) => ({
     getVideos: query<Results, VideoParams>({
       query: getVideos,
       providesTags: ["Videos"],
     }),
+    deleteVideo: mutation<Result, { id: string }>({
+      query: deleteVideoMutation,
+      invalidatesTags: ["Videos"],
+    }),
   }),
 });
 
-export const { useGetVideosQuery } = videosSlice;
+export const { useGetVideosQuery, useDeleteVideoMutation } = videosSlice;

@@ -55,11 +55,27 @@ export default function VideosTable({
   }
   function renderGenresCell(row: GridRenderCellParams) {
     const genres = row.value as Genre[];
+    const twoFirstGenres = genres.slice(0, 2);
+    const remainingGenres = genres.length - twoFirstGenres.length;
+
     return (
       <Box style={{ overflow: "scroll" }}>
-        {genres.map((genre: any) => (
-          <Chip sx={{ mr: 1 }} label={genre.name} />
+        {twoFirstGenres.map((genre, index) => (
+          <Chip
+            sx={{ fontSize: "0.6rem", marginRight: 1 }}
+            key={index}
+            label={genre.name}
+          />
         ))}
+
+        {remainingGenres > 0 && (
+          <Tooltip title={genres.map((genre) => genre.name).join(", ")}>
+            <Chip
+              sx={{ fontSize: "0.6rem", marginRight: 1 }}
+              label={`+${remainingGenres}`}
+            />
+          </Tooltip>
+        )}
       </Box>
     );
   }
@@ -71,10 +87,10 @@ export default function VideosTable({
 
     return (
       <Box style={{ overflow: "scroll" }}>
-        {twoFirstCategories.map((category) => (
+        {twoFirstCategories.map((category, index) => (
           <Chip
             sx={{ fontSize: "0.6rem", marginRight: 1 }}
-            key={category.id}
+            key={index}
             label={category.name}
           />
         ))}
@@ -95,12 +111,30 @@ export default function VideosTable({
 
   function renderCastMembersCell(row: GridRenderCellParams) {
     const castMembers = row.value as CastMember[];
+    const twoFirstCastMembers = castMembers.slice(0, 2);
+    const remainingCastMembers =
+      castMembers.length - twoFirstCastMembers.length;
 
     return (
       <Box style={{ overflow: "scroll" }}>
-        {castMembers.map((castMember: any) => (
-          <Chip sx={{ mr: 1 }} label={castMember.name} />
+        {twoFirstCastMembers.map((castMember, index) => (
+          <Chip
+            sx={{ fontSize: "0.6rem", marginRight: 1 }}
+            key={index}
+            label={castMember.name}
+          />
         ))}
+
+        {remainingCastMembers > 0 && (
+          <Tooltip
+            title={castMembers.map((castMember) => castMember.name).join(", ")}
+          >
+            <Chip
+              sx={{ fontSize: "0.6rem", marginRight: 1 }}
+              label={`+${remainingCastMembers}`}
+            />
+          </Tooltip>
+        )}
       </Box>
     );
   }

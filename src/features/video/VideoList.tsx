@@ -1,11 +1,16 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import VideosTable from "./components/VideosTable";
 import { GridFilterModel } from "@mui/x-data-grid";
-import { useGetVideosQuery } from "./videoSlice";
+import { useDeleteVideoMutation, useGetVideosQuery } from "./videoSlice";
+import { useSnackbar } from "notistack";
 
 export const VideoList = () => {
+  const { enqueueSnackbar } = useSnackbar();
+  const [deleteVideo, { error: deleteError, isSuccess: deleteSuccess }] =
+    useDeleteVideoMutation();
   const [options, setOptions] = React.useState({
     page: 1,
     perPage: 10,
@@ -32,11 +37,21 @@ export const VideoList = () => {
     }
     return setOptions({ ...options, search: "" });
   }
-
   async function handleDeleteGenre(id: string) {
-    console.log(id);
+    await deleteVideo({ id });
+  }
 
-    // await deleteGenre({ id });
+  useEffect(() => {
+    if (deleteSuccess) {
+      enqueueSnackbar(`Video deleted`, { variant: "success" });
+    }
+    if (deleteError) {
+      enqueueSnackbar(`Error deleting video`, { variant: "error" });
+    }
+  }, [deleteError, deleteSuccess, enqueueSnackbar]);
+
+  if (error) {
+    return <Typography>Error fetching videos</Typography>;
   }
 
   return (
