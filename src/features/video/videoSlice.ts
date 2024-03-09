@@ -1,5 +1,11 @@
 import { apiSlice } from "../api/apiSlice";
-import { Result, Results, Video, VideoParams } from "../../types/Videos";
+import {
+  Result,
+  Results,
+  Video,
+  VideoParams,
+  VideoPayload,
+} from "../../types/Videos";
 
 const endpointUrl = "/videos";
 
@@ -54,6 +60,14 @@ const deleteVideoMutation = ({ id }: { id: string }) => {
   };
 };
 
+const updateVideoMutation = (video: VideoPayload) => {
+  return {
+    url: `${endpointUrl}/${video.id}`,
+    method: "PATCH",
+    body: video,
+  };
+};
+
 const videosSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
     getVideos: query<Results, VideoParams>({
@@ -68,8 +82,16 @@ const videosSlice = apiSlice.injectEndpoints({
       query: getVideo,
       providesTags: ["Videos"],
     }),
+    updateVideo: mutation<Result, VideoPayload>({
+      query: updateVideoMutation,
+      invalidatesTags: ["Videos"],
+    }),
   }),
 });
 
-export const { useGetVideosQuery, useDeleteVideoMutation, useGetVideoQuery } =
-  videosSlice;
+export const {
+  useGetVideosQuery,
+  useDeleteVideoMutation,
+  useGetVideoQuery,
+  useUpdateVideoMutation,
+} = videosSlice;

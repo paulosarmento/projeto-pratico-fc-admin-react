@@ -2,19 +2,20 @@ import { Box, Paper, Typography } from "@mui/material";
 import { useSnackbar } from "notistack";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { initialState, useGetVideoQuery } from "./videoSlice";
 import { Video } from "../../types/Videos";
 import { VideoForm } from "./components/VideoForm";
+import { mapVideoToForm } from "./util";
+import {
+  initialState,
+  useGetVideoQuery,
+  useUpdateVideoMutation,
+} from "./videoSlice";
 
 export const VideoEdit = () => {
   const id = useParams<{ id: string }>().id as string;
   const { data: video, isFetching } = useGetVideoQuery({ id });
   const [videoState, setVideoState] = useState<Video>(initialState);
-  const [status, setStatus] = useState({
-    isLoading: false,
-    isSuccess: false,
-    isError: false,
-  });
+  const [updateVideo, status] = useUpdateVideoMutation();
   const { enqueueSnackbar } = useSnackbar();
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -24,7 +25,8 @@ export const VideoEdit = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await videoState;
+
+    await updateVideo(mapVideoToForm(videoState));
   }
 
   useEffect(() => {
@@ -42,7 +44,7 @@ export const VideoEdit = () => {
     }
   }, [status, enqueueSnackbar]);
 
-  console.log(video);
+  // console.log(video);
   return (
     <Box>
       <Paper>
@@ -53,11 +55,11 @@ export const VideoEdit = () => {
         </Box>
         <VideoForm
           video={videoState}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          genres={[]}
           categories={[]}
           castMembers={[]}
-          genres={[]}
-          handleSubmit={handleSubmit}
-          handleChange={handleChange}
           isDisabled={status.isLoading}
           isLoading={status.isLoading || isFetching}
         />

@@ -31,19 +31,65 @@ export function VideoForm({
     <Box p={2}>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ "& ,MuiTextField-root": { my: 1 } }}>
             <FormControl fullWidth>
               <TextField
                 required
-                name="name"
-                label="Name"
+                name="title"
+                label="Title"
                 value={video.title}
                 disabled={isDisabled}
                 onChange={handleChange}
+                inputProps={{ "data-testid": "title" }}
                 fullWidth
               />
             </FormControl>
           </Grid>
+
+          <Grid item xs={12}>
+            <FormControl fullWidth>
+              <TextField
+                required
+                name="description"
+                label="Description"
+                value={video.description}
+                disabled={isDisabled}
+                onChange={handleChange}
+                inputProps={{ "data-testid": "description" }}
+                fullWidth
+              />
+            </FormControl>
+          </Grid>
+
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <TextField
+                required
+                name="year_launched"
+                label="Year Launched"
+                value={video.year_launched}
+                disabled={isDisabled}
+                onChange={handleChange}
+                inputProps={{ "data-testid": "year_launched" }}
+                fullWidth
+              />
+            </FormControl>
+          </Grid>
+          <Grid item xs={6}>
+            <FormControl fullWidth>
+              <TextField
+                required
+                name="duration"
+                label="Duration"
+                value={video.duration}
+                disabled={isDisabled}
+                onChange={handleChange}
+                inputProps={{ "data-testid": "duration" }}
+                fullWidth
+              />
+            </FormControl>
+          </Grid>
+
           <Grid item xs={12}>
             <Box display={"flex"} gap={2}>
               <Button variant="contained" component={Link} to="/videos">
