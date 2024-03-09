@@ -6,6 +6,7 @@ import CategoryForm from "./components/CategoryForm";
 import { Category } from "../../types/Category";
 
 export const initialState: Category = {
+  id: "",
   name: "",
   description: "",
   is_active: false,
@@ -18,7 +19,7 @@ const CategoryCreate = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { id, created_at, ...initialState } = categoryState;
+    const { created_at, ...initialState } = categoryState;
     await createCategory(initialState);
   }
 

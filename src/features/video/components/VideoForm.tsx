@@ -1,10 +1,20 @@
-import { Box, Button, FormControl, Grid, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Grid,
+  RadioGroup,
+  TextField,
+} from "@mui/material";
 import React from "react";
 import { Video } from "../../../types/Videos";
 import { Category } from "../../../types/Category";
 import { Genre } from "../../../types/Genres";
 import { CastMember } from "../../../types/CastMembers";
 import { Link } from "react-router-dom";
+import { AutoCompleteFields } from "../../../components/AutoCompleteFields";
 
 export type Props = {
   video: Video;
@@ -30,82 +40,133 @@ export function VideoForm({
   return (
     <Box p={2}>
       <form onSubmit={handleSubmit}>
-        <Grid container spacing={3}>
-          <Grid item xs={12} sx={{ "& ,MuiTextField-root": { my: 1 } }}>
+        <Grid container spacing={4}>
+          <Grid item xs={12} md={6} sx={{ "& .MuiTextField-root": { my: 2 } }}>
             <FormControl fullWidth>
               <TextField
-                required
                 name="title"
                 label="Title"
                 value={video.title}
                 disabled={isDisabled}
                 onChange={handleChange}
                 inputProps={{ "data-testid": "title" }}
-                fullWidth
               />
             </FormControl>
-          </Grid>
-
-          <Grid item xs={12}>
             <FormControl fullWidth>
               <TextField
-                required
+                multiline
+                minRows={4}
                 name="description"
                 label="Description"
+                disabled={isDisabled}
+                onChange={handleChange}
                 value={video.description}
-                disabled={isDisabled}
-                onChange={handleChange}
                 inputProps={{ "data-testid": "description" }}
-                fullWidth
               />
             </FormControl>
-          </Grid>
 
-          <Grid item xs={6}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                name="year_launched"
-                label="Year Launched"
-                value={video.year_launched}
-                disabled={isDisabled}
-                onChange={handleChange}
-                inputProps={{ "data-testid": "year_launched" }}
-                fullWidth
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={6}>
-            <FormControl fullWidth>
-              <TextField
-                required
-                name="duration"
-                label="Duration"
-                value={video.duration}
-                disabled={isDisabled}
-                onChange={handleChange}
-                inputProps={{ "data-testid": "duration" }}
-                fullWidth
-              />
-            </FormControl>
-          </Grid>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <TextField
+                    name="year_launched"
+                    label="Year Launched"
+                    disabled={isDisabled}
+                    onChange={handleChange}
+                    value={video.year_launched}
+                    inputProps={{ "data-testid": "year_launched" }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <TextField
+                    name="duration"
+                    label="Duration"
+                    disabled={false}
+                    value={video.duration}
+                    onChange={handleChange}
+                    inputProps={{ "data-testid": "duration" }}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
 
-          <Grid item xs={12}>
-            <Box display={"flex"} gap={2}>
-              <Button variant="contained" component={Link} to="/videos">
-                Back
-              </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                disabled={isDisabled || isLoading}
-                type="submit"
+            <Grid item xs={12}>
+              <AutoCompleteFields
+                name="genres"
+                label="Genres"
+                values={video.genres}
+                options={genres || []}
+                isLoading={isLoading}
+                isDisabled={isDisabled}
+                handleChange={handleChange}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Grid
+                container
+                alignContent={"center"}
+                justifyContent={"space-between"}
+                spacing={2}
               >
-                {isLoading ? "Saving..." : "Save"}
-              </Button>
-            </Box>
+                <Grid item xs={6}>
+                  <AutoCompleteFields
+                    name="categories"
+                    label="Categories"
+                    values={video.categories}
+                    options={categories || []}
+                    isLoading={isLoading}
+                    isDisabled={isDisabled}
+                    handleChange={handleChange}
+                  />
+                </Grid>
+
+                <Grid item xs={6}>
+                  <AutoCompleteFields
+                    name="cast_members"
+                    label="Cast Members"
+                    values={video.cast_members}
+                    options={castMembers || []}
+                    isLoading={isLoading}
+                    isDisabled={isDisabled}
+                    handleChange={handleChange}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12} md={6} sx={{ "& .MuiTextField-root": { my: 2 } }}>
+            <FormControl fullWidth>
+              <Box mt={2} mb={2}>
+                <FormLabel component="legend">Rating</FormLabel>
+              </Box>
+              <RadioGroup
+                row
+                name="rating"
+                value={video.rating}
+                onChange={handleChange}
+              ></RadioGroup>
+            </FormControl>
           </Grid>
         </Grid>
+
+        <Box display="flex" sx={{ my: 2 }} gap={2}>
+          <Button variant="contained" component={Link} to="/videos">
+            Back
+          </Button>
+
+          <Button
+            type="submit"
+            color="secondary"
+            variant="contained"
+            disabled={isDisabled || isLoading}
+          >
+            {isLoading ? "Loading..." : "Save"}
+          </Button>
+        </Box>
       </form>
     </Box>
   );

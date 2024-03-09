@@ -4,6 +4,7 @@ import CategoryForm from "./CategoryForm";
 
 const props = {
   category: {
+    id: "1",
     name: "test",
     description: "test",
     is_active: true,

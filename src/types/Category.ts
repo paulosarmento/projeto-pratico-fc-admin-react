@@ -9,7 +9,7 @@ export interface Result {
 }
 
 export interface Category {
-  id?: string;
+  id: string;
   name: string;
   description: string;
   is_active: boolean;

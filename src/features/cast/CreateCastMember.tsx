@@ -25,7 +25,7 @@ export const CastMemberCreate = () => {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const { id, created_at, ...initialState } = castMemberState;
+    const { created_at, ...initialState } = castMemberState;
     await createCastMember(initialState);
   }
 

@@ -52,7 +52,7 @@ export interface VideoPayload {
   is_opened: boolean;
   rating: string;
   duration: number;
-  categories_id: (string | undefined)[];
-  genres_id: (string | undefined)[];
-  cast_members_id: (string | undefined)[];
+  categories_id: string[];
+  genres_id: string[];
+  cast_members_id: string[];
 }
