@@ -2,7 +2,7 @@ import {
   CastMember,
   CastMemberParams,
   Result,
-  Results,
+  CastMembers,
 } from "../../types/CastMembers";
 import { apiSlice } from "../api/apiSlice";
 
@@ -67,7 +67,7 @@ function getCastMember({ id }: { id: string }) {
 
 export const castMembersApiSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
-    getCastMembers: query<Results, CastMemberParams>({
+    getCastMembers: query<CastMembers, CastMemberParams>({
       query: getCastMembers,
       providesTags: ["CastMembers"],
     }),

@@ -9,11 +9,11 @@ import {
 } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { Genre } from "../../../types/Genres";
-import { Results } from "../../../types/Videos";
+import { Videos } from "../../../types/Videos";
 import { Category } from "../../../types/Category";
 import { CastMember } from "../../../types/CastMembers";
 type Props = {
-  data: Results | undefined;
+  data: Videos | undefined;
   perPage: number;
   isFetching: boolean;
   rowsPerPage: number[];
@@ -185,7 +185,7 @@ export default function VideosTable({
     },
   ];
 
-  function mapDataToGridRows(data: Results) {
+  function mapDataToGridRows(data: Videos) {
     const { data: videos } = data;
 
     return videos.map((video) => ({

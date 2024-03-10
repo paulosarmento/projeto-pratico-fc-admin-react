@@ -8,10 +8,10 @@ import {
   GridToolbar,
 } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
-import { Results } from "../../../types/CastMembers";
+import { CastMembers } from "../../../types/CastMembers";
 
 type Props = {
-  data: Results | undefined;
+  data: CastMembers | undefined;
   perPage: number;
   isFetching: boolean;
   rowsPerPage?: number[];
@@ -103,7 +103,7 @@ export function CastMembersTable({
     },
   ];
 
-  function mapDataToGridRows(data: Results) {
+  function mapDataToGridRows(data: CastMembers) {
     const { data: castMembers } = data;
     return castMembers.map((castMember) => ({
       id: castMember.id,

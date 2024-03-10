@@ -7,6 +7,9 @@ import { VideoForm } from "./components/VideoForm";
 import { mapVideoToForm } from "./util";
 import {
   initialState,
+  useGetCastMembersQuery,
+  useGetCategoriesQuery,
+  useGetGenresQuery,
   useGetVideoQuery,
   useUpdateVideoMutation,
 } from "./videoSlice";
@@ -17,6 +20,9 @@ export const VideoEdit = () => {
   const [videoState, setVideoState] = useState<Video>(initialState);
   const [updateVideo, status] = useUpdateVideoMutation();
   const { enqueueSnackbar } = useSnackbar();
+  const { data: categories } = useGetCategoriesQuery({});
+  const { data: genres } = useGetGenresQuery({});
+  const { data: castMembers } = useGetCastMembersQuery({});
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = e.target;
@@ -57,9 +63,9 @@ export const VideoEdit = () => {
           video={videoState}
           handleChange={handleChange}
           handleSubmit={handleSubmit}
-          genres={[]}
-          categories={[]}
-          castMembers={[]}
+          genres={genres?.data}
+          categories={categories?.data}
+          castMembers={castMembers?.data}
           isDisabled={status.isLoading}
           isLoading={status.isLoading || isFetching}
         />

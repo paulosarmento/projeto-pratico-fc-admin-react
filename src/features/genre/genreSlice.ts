@@ -1,4 +1,4 @@
-import { Results } from "../../types/Category";
+import { Categories } from "../../types/Category";
 import {
   Genre,
   GenreParams,
@@ -79,7 +79,7 @@ function updateGenreMutation(genre: GenrePayload) {
 
 export const genreSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
-    getCategories: query<Results, GenreParams>({
+    getCategories: query<Categories, GenreParams>({
       query: getCategories,
       providesTags: ["Genres"],
     }),

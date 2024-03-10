@@ -1,11 +1,14 @@
-import { apiSlice } from "../api/apiSlice";
+import { CastMembers } from "../../types/CastMembers";
+import { Categories } from "../../types/Category";
+import { Genres } from "../../types/Genres";
 import {
   Result,
-  Results,
   Video,
   VideoParams,
   VideoPayload,
+  Videos,
 } from "../../types/Videos";
+import { apiSlice } from "../api/apiSlice";
 
 const endpointUrl = "/videos";
 
@@ -44,33 +47,45 @@ function parseQueryParams(params: VideoParams) {
   return query.toString();
 }
 
-const getVideos = ({ page = 1, perPage = 10, search = "" }) => {
+function getVideos({ page = 1, perPage = 10, search = "" }) {
   const params: VideoParams = { search, page, perPage };
   return `${endpointUrl}?${parseQueryParams(params)}`;
-};
+}
 
-const getVideo = ({ id }: { id: string }) => {
+function getVideo({ id }: { id: string }) {
   return `${endpointUrl}/${id}`;
-};
+}
 
-const deleteVideoMutation = ({ id }: { id: string }) => {
+function getCategories() {
+  return `categories?all=true`;
+}
+
+function getCastMembers() {
+  return `cast-members?all=true`;
+}
+
+function getGenres() {
+  return `genres?all=true`;
+}
+
+function deleteVideoMutation({ id }: { id: string }) {
   return {
     url: `${endpointUrl}/${id}`,
     method: "DELETE",
   };
-};
+}
 
-const updateVideoMutation = (video: VideoPayload) => {
+function updateVideoMutation(video: VideoPayload) {
   return {
     url: `${endpointUrl}/${video.id}`,
     method: "PATCH",
     body: video,
   };
-};
+}
 
 const videosSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
-    getVideos: query<Results, VideoParams>({
+    getVideos: query<Videos, VideoParams>({
       query: getVideos,
       providesTags: ["Videos"],
     }),
@@ -86,6 +101,18 @@ const videosSlice = apiSlice.injectEndpoints({
       query: updateVideoMutation,
       invalidatesTags: ["Videos"],
     }),
+    getCategories: query<Categories, VideoParams>({
+      query: getCategories,
+      providesTags: ["Categories"],
+    }),
+    getCastMembers: query<CastMembers, VideoParams>({
+      query: getCastMembers,
+      providesTags: ["CastMembers"],
+    }),
+    getGenres: query<Genres, VideoParams>({
+      query: getGenres,
+      providesTags: ["Genres"],
+    }),
   }),
 });
 
@@ -94,4 +121,7 @@ export const {
   useDeleteVideoMutation,
   useGetVideoQuery,
   useUpdateVideoMutation,
+  useGetCategoriesQuery,
+  useGetCastMembersQuery,
+  useGetGenresQuery,
 } = videosSlice;

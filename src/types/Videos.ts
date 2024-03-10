@@ -2,7 +2,7 @@ import { CastMember } from "./CastMembers";
 import { Category } from "./Category";
 import { Genre } from "./Genres";
 
-export interface Results {
+export interface Videos {
   data: Video[];
   meta: Meta;
 }

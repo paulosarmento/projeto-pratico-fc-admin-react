@@ -1,4 +1,4 @@
-export interface Results {
+export interface Categories {
   data: Category[];
   meta: Meta;
 }
