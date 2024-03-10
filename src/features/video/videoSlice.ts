@@ -83,6 +83,14 @@ function updateVideoMutation(video: VideoPayload) {
   };
 }
 
+function createVideoMutation(video: VideoPayload) {
+  return {
+    url: endpointUrl,
+    method: "POST",
+    body: video,
+  };
+}
+
 const videosSlice = apiSlice.injectEndpoints({
   endpoints: ({ query, mutation }) => ({
     getVideos: query<Videos, VideoParams>({
@@ -113,6 +121,10 @@ const videosSlice = apiSlice.injectEndpoints({
       query: getGenres,
       providesTags: ["Genres"],
     }),
+    createVideo: mutation<Result, VideoPayload>({
+      query: createVideoMutation,
+      invalidatesTags: ["Videos"],
+    }),
   }),
 });
 
@@ -124,4 +136,5 @@ export const {
   useGetCategoriesQuery,
   useGetCastMembersQuery,
   useGetGenresQuery,
+  useCreateVideoMutation,
 } = videosSlice;
