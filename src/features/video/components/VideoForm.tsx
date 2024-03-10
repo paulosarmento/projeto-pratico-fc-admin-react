@@ -3,8 +3,10 @@ import {
   Box,
   Button,
   FormControl,
+  FormControlLabel,
   FormLabel,
   Grid,
+  Radio,
   RadioGroup,
   TextField,
 } from "@mui/material";
@@ -26,6 +28,15 @@ export type Props = {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
+
+const ratingOptions = [
+  { label: "L", value: "L" },
+  { label: "10", value: "10" },
+  { label: "12", value: "12" },
+  { label: "14", value: "14" },
+  { label: "16", value: "16" },
+  { label: "18", value: "18" },
+];
 
 export function VideoForm({
   video,
@@ -94,10 +105,10 @@ export function VideoForm({
 
             <Grid item xs={12}>
               <AutoCompleteFields
-                name="genres"
-                label="Genres"
-                values={video.genres}
-                options={genres || []}
+                name="categories"
+                label="Categories"
+                values={video.categories}
+                options={categories || []}
                 isLoading={isLoading}
                 isDisabled={isDisabled}
                 handleChange={handleChange}
@@ -113,10 +124,10 @@ export function VideoForm({
               >
                 <Grid item xs={6}>
                   <AutoCompleteFields
-                    name="categories"
-                    label="Categories"
-                    values={video.categories}
-                    options={categories || []}
+                    name="genres"
+                    label="Genres"
+                    values={video.genres}
+                    options={genres || []}
                     isLoading={isLoading}
                     isDisabled={isDisabled}
                     handleChange={handleChange}
@@ -139,16 +150,23 @@ export function VideoForm({
           </Grid>
 
           <Grid item xs={12} md={6} sx={{ "& .MuiTextField-root": { my: 2 } }}>
-            <FormControl fullWidth>
-              <Box mt={2} mb={2}>
-                <FormLabel component="legend">Rating</FormLabel>
-              </Box>
+            <FormControl>
+              <FormLabel component="legend">Rating</FormLabel>
               <RadioGroup
                 row
                 name="rating"
                 value={video.rating}
                 onChange={handleChange}
-              ></RadioGroup>
+              >
+                {ratingOptions.map((option) => (
+                  <FormControlLabel
+                    key={option.value}
+                    value={option.value}
+                    control={<Radio />}
+                    label={option.label}
+                  />
+                ))}
+              </RadioGroup>
             </FormControl>
           </Grid>
         </Grid>
