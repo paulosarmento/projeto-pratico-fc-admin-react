@@ -1,22 +1,20 @@
 import {
-  Autocomplete,
   Box,
   Button,
   FormControl,
-  FormControlLabel,
   FormLabel,
   Grid,
-  Radio,
   RadioGroup,
   TextField,
 } from "@mui/material";
 import React from "react";
-import { Video } from "../../../types/Videos";
-import { Category } from "../../../types/Category";
-import { Genre } from "../../../types/Genres";
-import { CastMember } from "../../../types/CastMembers";
 import { Link } from "react-router-dom";
 import { AutoCompleteFields } from "../../../components/AutoCompleteFields";
+import { RatingList } from "../../../components/RatingList";
+import { CastMember } from "../../../types/CastMembers";
+import { Category } from "../../../types/Category";
+import { Genre } from "../../../types/Genres";
+import { Video } from "../../../types/Videos";
 
 export type Props = {
   video: Video;
@@ -158,14 +156,7 @@ export function VideoForm({
                 value={video.rating}
                 onChange={handleChange}
               >
-                {ratingOptions.map((option) => (
-                  <FormControlLabel
-                    key={option.value}
-                    value={option.value}
-                    control={<Radio />}
-                    label={option.label}
-                  />
-                ))}
+                <RatingList isDisabled={isDisabled} />
               </RadioGroup>
             </FormControl>
           </Grid>
