@@ -6,13 +6,18 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+
+type HeaderProps = {
+  toggle: () => void;
+  theme: string;
+  handleDrawerToggle?: () => void;
+};
+
 export default function Header({
   toggle,
   theme,
-}: {
-  toggle: () => void;
-  theme: string;
-}) {
+  handleDrawerToggle,
+}: HeaderProps) {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -22,12 +27,13 @@ export default function Header({
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            onClick={handleDrawerToggle}
+            sx={{ mr: 2, display: { sm: "none" } }}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
+            CodeFlix
           </Typography>
 
           <IconButton sx={{ ml: 2 }} onClick={toggle} color="inherit">
