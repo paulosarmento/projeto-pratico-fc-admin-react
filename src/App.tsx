@@ -5,14 +5,22 @@ import { darkTheme, lightTheme } from "./config/theme";
 import { RouterProvider } from "react-router-dom";
 import { Router } from "./components/Router";
 import { SnackbarProvider } from "notistack";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [theme, setTheme] = useState(darkTheme);
 
   const toggle = () => {
     setTheme(theme === darkTheme ? lightTheme : darkTheme);
+    localStorage.setItem("theme", theme.palette.mode);
   };
+
+  useEffect(() => {
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme) {
+      setTheme(theme === darkTheme ? lightTheme : darkTheme);
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -23,7 +31,7 @@ function App() {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Box component="main">
-          <Header toggle={toggle} />
+          <Header theme={theme.palette.mode} toggle={toggle} />
           <Layout
             children={<RouterProvider router={Router}></RouterProvider>}
           />
