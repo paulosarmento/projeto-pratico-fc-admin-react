@@ -6,24 +6,14 @@ import { RouterProvider } from "react-router-dom";
 import { Router } from "./components/Router";
 import { SnackbarProvider } from "notistack";
 import { useEffect, useState } from "react";
+import { useLocalStorage } from "./hooks/useLocalStorage";
+import { useAppTheme } from "./hooks/useAppTheme";
 
 function App() {
-  const [theme, setTheme] = useState(darkTheme);
-
-  const toggle = () => {
-    setTheme(theme === darkTheme ? lightTheme : darkTheme);
-    localStorage.setItem("theme", theme.palette.mode);
-  };
-
-  useEffect(() => {
-    const currentTheme = localStorage.getItem("theme");
-    if (currentTheme) {
-      setTheme(theme === darkTheme ? lightTheme : darkTheme);
-    }
-  }, []);
+  const [currentTheme, toggleCurrentTheme] = useAppTheme();
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={currentTheme}>
       <CssBaseline />
       <SnackbarProvider
         autoHideDuration={2000}
@@ -31,7 +21,10 @@ function App() {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Box component="main">
-          <Header theme={theme.palette.mode} toggle={toggle} />
+          <Header
+            theme={currentTheme.palette.mode === "dark" ? "dark" : "light"}
+            toggle={toggleCurrentTheme}
+          />
           <Layout
             children={<RouterProvider router={Router}></RouterProvider>}
           />
